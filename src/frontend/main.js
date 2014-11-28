@@ -61,7 +61,7 @@ window.ChatApi = {
   },
 
   removeUser: function(user) {
-    this.getUsers().removeObjects(user);
+    this.getUsers().removeObject(user);
   },
 
   onUsersChange: function(cb) {
