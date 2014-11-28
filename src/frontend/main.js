@@ -85,9 +85,9 @@ setInterval(function(){
   var t = time();
   window.ChatApi.getUsers().forEach(function(u) {
     var diff = t - u.time;
-    if (diff > 60) {
+    if (diff > 5 * 60 * 1000) {
       console.log("Removing user " + u.name + " diff " + diff);
       //window.ChatApi.removeUser(u);
     }
   });
-}, 5 * 60 * 1000);
+}, 3000);

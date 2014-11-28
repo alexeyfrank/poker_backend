@@ -138,12 +138,12 @@
 	  var t = time();
 	  window.ChatApi.getUsers().forEach(function(u) {
 	    var diff = t - u.time;
-	    if (diff > 60) {
+	    if (diff > 5 * 60 * 1000) {
 	      console.log("Removing user " + u.name + " diff " + diff);
 	      //window.ChatApi.removeUser(u);
 	    }
 	  });
-	}, 5 * 60 * 1000);
+	}, 3000);
 
 
 /***/ },
@@ -7348,7 +7348,7 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module), (function() { return this; }())))
 
 /***/ },
 /* 4 */
@@ -7358,20 +7358,20 @@
 
 	var Swarm = module.exports = window.Swarm = {};
 
-	Swarm.env = __webpack_require__(5);
-	Swarm.Spec = __webpack_require__(6);
-	Swarm.LongSpec = __webpack_require__(7);
-	Swarm.Syncable = __webpack_require__(8);
-	Swarm.Model = __webpack_require__(9);
-	Swarm.Set = __webpack_require__(10);
-	Swarm.Vector = __webpack_require__(11);
-	Swarm.Host = __webpack_require__(12);
-	Swarm.Pipe = __webpack_require__(13);
-	Swarm.Storage = __webpack_require__(14);
-	Swarm.SharedWebStorage = __webpack_require__(15);
-	Swarm.LevelStorage = __webpack_require__(16);
-	Swarm.WebSocketStream = __webpack_require__(17);
-	Swarm.ReactMixin = __webpack_require__(18);
+	Swarm.env = __webpack_require__(6);
+	Swarm.Spec = __webpack_require__(7);
+	Swarm.LongSpec = __webpack_require__(8);
+	Swarm.Syncable = __webpack_require__(9);
+	Swarm.Model = __webpack_require__(10);
+	Swarm.Set = __webpack_require__(11);
+	Swarm.Vector = __webpack_require__(12);
+	Swarm.Host = __webpack_require__(13);
+	Swarm.Pipe = __webpack_require__(14);
+	Swarm.Storage = __webpack_require__(15);
+	Swarm.SharedWebStorage = __webpack_require__(16);
+	Swarm.LevelStorage = __webpack_require__(17);
+	Swarm.WebSocketStream = __webpack_require__(18);
+	Swarm.ReactMixin = __webpack_require__(19);
 
 	Swarm.get = function (spec) {
 	    return Swarm.env.localhost.get(spec);
@@ -7409,6 +7409,22 @@
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7468,7 +7484,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7725,12 +7741,12 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Spec = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
 
 	/**LongSpec is a Long Specifier, i.e. a string of quant+id tokens that may be
 	 * indeed very (many megabytes) long.  Ids are compressed using
@@ -8317,13 +8333,13 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Spec = __webpack_require__(6);
-	var env = __webpack_require__(5);
+	var Spec = __webpack_require__(7);
+	var env = __webpack_require__(6);
 
 	/**
 	 * Syncable: an oplog-synchronized object
@@ -9267,13 +9283,13 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Spec = __webpack_require__(6);
-	var Syncable = __webpack_require__(8);
+	var Spec = __webpack_require__(7);
+	var Syncable = __webpack_require__(9);
 
 	/**
 	 * Model (LWW key-value object)
@@ -9476,15 +9492,15 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var env = __webpack_require__(5);
-	var Spec = __webpack_require__(6);
-	var Syncable = __webpack_require__(8);
-	var Model = __webpack_require__(9); // TODO
+	var env = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
+	var Syncable = __webpack_require__(9);
+	var Model = __webpack_require__(10); // TODO
 	var ProxyListener = __webpack_require__(20);
 	var CollectionMethodsMixin = __webpack_require__(21);
 
@@ -9646,14 +9662,14 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Spec = __webpack_require__(6);
-	var LongSpec = __webpack_require__(7);
-	var Syncable = __webpack_require__(8);
+	var Spec = __webpack_require__(7);
+	var LongSpec = __webpack_require__(8);
+	var Syncable = __webpack_require__(9);
 	var ProxyListener = __webpack_require__(20);
 	var CollectionMethodsMixin = __webpack_require__(21);
 
@@ -9980,15 +9996,15 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var env = __webpack_require__(5);
-	var Spec = __webpack_require__(6);
-	var Syncable = __webpack_require__(8);
-	var Pipe = __webpack_require__(13);
+	var env = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
+	var Syncable = __webpack_require__(9);
+	var Pipe = __webpack_require__(14);
 	var SecondPreciseClock = __webpack_require__(22);
 
 	/**
@@ -10313,13 +10329,13 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var env = __webpack_require__(5);
-	var Spec = __webpack_require__(6);
+	var env = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
 
 	/**
 	 * A "pipe" is a channel to a remote Swarm Host. Pipe's interface
@@ -10589,12 +10605,12 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Syncable = __webpack_require__(8);
+	var Syncable = __webpack_require__(9);
 
 	function Storage(async) {
 	    this.async = !!async || false;
@@ -10824,12 +10840,12 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Spec = __webpack_require__(6);
-	var Storage = __webpack_require__(14);
+	var Spec = __webpack_require__(7);
+	var Storage = __webpack_require__(15);
 
 
 	/** SharedWebStorage may use localStorage or sessionStorage
@@ -10957,13 +10973,13 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var env = __webpack_require__(5);
-	var Spec = __webpack_require__(6);
-	var Storage = __webpack_require__(14);
+	var env = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
+	var Storage = __webpack_require__(15);
 	var SecondPreciseClock = __webpack_require__(22);
 
 	/** LevelDB is a perfect local storage: string-indexed, alphanumerically
@@ -11117,12 +11133,12 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var env = __webpack_require__(5);
+	var env = __webpack_require__(6);
 
 	function WebSocketStream(url) {
 	    var self = this;
@@ -11171,13 +11187,13 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var env = __webpack_require__(5);
-	var Spec = __webpack_require__(6);
+	var env = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
 
 	module.exports = {
 
@@ -11232,22 +11248,6 @@
 	    }
 
 	};
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ },
@@ -11355,7 +11355,7 @@
 
 	"use strict";
 
-	var Spec = __webpack_require__(6);
+	var Spec = __webpack_require__(7);
 
 	/** Swarm is based on the Lamport model of time and events in a
 	  * distributed system, so Lamport timestamps are essential to
