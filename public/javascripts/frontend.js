@@ -68,14 +68,23 @@
 	window.h = swarmHost;
 
 	var users = swarmHost.get("/Users#all");
+	var messages = swarmHost.get("/Messages#all");
 
 	window.ChatApi = {
 	  getUsers: function() {
 	    return users;
 	  },
 
+	  getMessages: function() {
+	    return messages;
+	  },
+
 	  getUser: function(id) {
 	    return swarmHost.get("/User#" + id);
+	  },
+
+	  getMessage: function(id) {
+	    return swarmHost.get("/Message#" + id);
 	  },
 
 	  createUser: function(name) {
@@ -87,12 +96,28 @@
 	    return user;
 	  },
 
+	  createMessage: function(text, user) {
+	    var id = rid();
+	    var message = new Models.Message(id);
+	    message.set({ text: text, user: user });
+	    messages.addObject(message);
+	    return message;
+	  },
+
 	  onUsersChange: function(cb) {
 	    this.getUsers().on(cb);
 	  },
 
 	  onUserChange: function(id, cb) {
 	    this.getUser(id).on(cb);
+	  },
+
+	  onMessagesChange: function(cb) {
+	    this.getMessages().on(cb);
+	  },
+
+	  onMessageChange: function(id, cb) {
+	    this.getMessage(id).on(cb);
 	  }
 	};
 
@@ -113,10 +138,23 @@
 	  objectType: User
 	});
 
+	var Message = Swarm.Model.extend('Message', {
+	    defaults: {
+	        text: 'Mickey',
+	        user: ""
+	    }
+	});
+
+	var Messages = Swarm.Set.extend('Messages', {
+	  objectType: Message
+	});
+
 
 	var models = {
 	  User: User,
-	  Users: Users
+	  Users: Users,
+	  Message: Message,
+	  Messages: Message
 	};
 
 	module.exports = models;
@@ -7284,7 +7322,7 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module), (function() { return this; }())))
 
 /***/ },
 /* 4 */
@@ -9421,8 +9459,8 @@
 	var Spec = __webpack_require__(6);
 	var Syncable = __webpack_require__(8);
 	var Model = __webpack_require__(9); // TODO
-	var ProxyListener = __webpack_require__(19);
-	var CollectionMethodsMixin = __webpack_require__(20);
+	var ProxyListener = __webpack_require__(20);
+	var CollectionMethodsMixin = __webpack_require__(21);
 
 	/**
 	 * Backbone's Collection is essentially an array and arrays behave poorly
@@ -9590,8 +9628,8 @@
 	var Spec = __webpack_require__(6);
 	var LongSpec = __webpack_require__(7);
 	var Syncable = __webpack_require__(8);
-	var ProxyListener = __webpack_require__(19);
-	var CollectionMethodsMixin = __webpack_require__(20);
+	var ProxyListener = __webpack_require__(20);
+	var CollectionMethodsMixin = __webpack_require__(21);
 
 	/** In distributed environments, linear structures are tricky. It is always
 	 *  recommended to use (sorted) Set as your default collection type. Still, in
@@ -9925,7 +9963,7 @@
 	var Spec = __webpack_require__(6);
 	var Syncable = __webpack_require__(8);
 	var Pipe = __webpack_require__(13);
-	var SecondPreciseClock = __webpack_require__(21);
+	var SecondPreciseClock = __webpack_require__(22);
 
 	/**
 	 * Host is (normally) a singleton object registering/coordinating
@@ -10900,7 +10938,7 @@
 	var env = __webpack_require__(5);
 	var Spec = __webpack_require__(6);
 	var Storage = __webpack_require__(14);
-	var SecondPreciseClock = __webpack_require__(21);
+	var SecondPreciseClock = __webpack_require__(22);
 
 	/** LevelDB is a perfect local storage: string-indexed, alphanumerically
 	  * sorted, stores JSON with minimal overhead. Last but not least, has
@@ -11174,6 +11212,22 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	function ProxyListener() {
@@ -11213,7 +11267,7 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11270,7 +11324,7 @@
 	};
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11393,22 +11447,6 @@
 
 
 	module.exports = SecondPreciseClock;
-
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ }
