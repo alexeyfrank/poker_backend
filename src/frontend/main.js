@@ -13,6 +13,10 @@ function rid() {
   return  Math.round(Math.random() * 10000) + "";
 }
 
+function time() {
+  return Math.round(new Date().getTime() / 1000);
+}
+
 window.h = swarmHost;
 
 var users = swarmHost.get("/Users#all");
@@ -39,7 +43,7 @@ window.ChatApi = {
     var id = rid();
 
     var user = new Models.User(id);
-    user.set({ name: name });
+    user.set({ name: name, time: time() });
     users.addObject(user);
     return user;
   },
@@ -50,6 +54,14 @@ window.ChatApi = {
     message.set({ text: text, time: time, user: user._id });
     messages.addObject(message);
     return message;
+  },
+
+  activeUser: function(user) {
+    user.set({ time: time() });
+  },
+
+  removeUser: function(user) {
+    this.getUsers().removeObjects(user);
   },
 
   onUsersChange: function(cb) {
@@ -68,3 +80,14 @@ window.ChatApi = {
     this.getMessage(id).on(cb);
   }
 };
+
+setInterval(function(){
+  var t = time();
+  window.ChatApi.getUsers().forEach(function(u) {
+    var diff = t - u.time;
+    if (diff > 60) {
+      console.log("Removing user " + u.name + " diff " + diff);
+      //window.ChatApi.removeObject(u);
+    }
+  });
+}, 30000);

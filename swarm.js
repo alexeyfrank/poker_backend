@@ -3,6 +3,7 @@ var Swarm = require('swarm');
 var User = Swarm.Model.extend('User', {
     defaults: {
         name: 'Mickey',
+        time: 0,
     }
 });
 
