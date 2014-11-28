@@ -59,7 +59,7 @@
 	var swarmHost = new Swarm.Host(id);
 
 	// 2. connect to your server
-	swarmHost.connect('ws://localhost:8000/');
+	swarmHost.connect('ws://codewhale.in:8181/');
 
 	function rid() {
 	  return  Math.round(Math.random() * 10000) + "";
