@@ -1,11 +1,19 @@
 var Swarm = require('swarm');
 
-var Mouse = Swarm.Model.extend('Mouse', {
+var User = Swarm.Model.extend('User', {
     defaults: {
         name: 'Mickey',
-        x: 0,
-        y: 0
     }
 });
 
-module.exports = Mouse; // CommonJS
+var Users = Swarm.Set.extend('Users', {
+  objectType: User
+});
+
+
+var models = {
+  User: User,
+  Users: Users
+};
+
+module.exports = models;
