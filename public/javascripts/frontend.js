@@ -59,6 +59,7 @@
 	var swarmHost = new Swarm.Host(id);
 
 	// 2. connect to your server
+	//
 	swarmHost.connect('ws://codewhale.in:8181/');
 
 	function rid() {
@@ -96,10 +97,10 @@
 	    return user;
 	  },
 
-	  createMessage: function(text, user) {
+	  createMessage: function(text, time, user) {
 	    var id = rid();
 	    var message = new Models.Message(id);
-	    message.set({ text: text, user: user });
+	    message.set({ text: text, time: time, user: user._id });
 	    messages.addObject(message);
 	    return message;
 	  },
@@ -141,7 +142,8 @@
 	var Message = Swarm.Model.extend('Message', {
 	    defaults: {
 	        text: 'Mickey',
-	        user: ""
+	        user: "",
+	        time: ""
 	    }
 	});
 

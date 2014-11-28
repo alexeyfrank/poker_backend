@@ -13,7 +13,8 @@ var Users = Swarm.Set.extend('Users', {
 var Message = Swarm.Model.extend('Message', {
     defaults: {
         text: 'Mickey',
-        user: ""
+        user: "",
+        time: ""
     }
 });
 
