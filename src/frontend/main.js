@@ -90,4 +90,4 @@ setInterval(function(){
       window.ChatApi.removeUser(u);
     }
   });
-}, 30000);
+}, 5 * 60 * 1000);
