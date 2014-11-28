@@ -140,7 +140,7 @@
 	    var diff = t - u.time;
 	    if (diff > 60) {
 	      console.log("Removing user " + u.name + " diff " + diff);
-	      //window.ChatApi.removeObject(u);
+	      window.ChatApi.removeUser(u);
 	    }
 	  });
 	}, 30000);
