@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+var debug = require('debug')('poker');
+var app = require('../app');
+var http = require('http');
+var ws_lib = require('ws');
+var Swarm = require('swarm');
+var swarmApp = require('../swarm');
+
+var fileStorage = new Swarm.FileStorage('storage');
+var swarmHost = new Swarm.Host('swarm~nodejs', 0, fileStorage);
+
+var httpServer = http.createServer(app);
+var wsServer = new ws_lib.Server({ server: httpServer });
+
+wsServer.on('connection', function (ws) {
+  console.log('new incoming WebSocket connection');
+  swarmHost.accept(new Swarm.EinarosWSStream(ws), { delay: 50 });
+});
+
+httpServer.listen(8000);
+
+//app.set('port', process.env.PORT || 3000);
+
+//var server = app.listen(app.get('port'), function() {
+  //debug('Express server listening on port ' + server.address().port);
+//});
